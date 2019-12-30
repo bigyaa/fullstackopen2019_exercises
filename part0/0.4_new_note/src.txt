@@ -1,4 +1,4 @@
-title Creating a New Note: Sequence Diagram
+title 0.4) new note : Sequence Diagram
 
 note left of browser:
 User enters a new note data and 
