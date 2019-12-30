@@ -1,0 +1,41 @@
+title 0.6) New note : Sequence Diagram
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+server-->browser: HTML-code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+server-->browser: spa.js
+
+note over browser:
+browser starts executing js-code
+that defines the event handlers to 
+generate the DOM and add a new note 
+without the page having to re-render
+end note
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
+note left of browser:
+user enters a new note and
+clicks on the 'Save' button
+end note  
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+
+note right of browser:
+Request Payload: {content: "..", date: "2019-12-30T19:30:11.739Z"}
+end note  
+
+server-->browser: {"message":"note created"}
+
+note over browser:
+Instead of redirecting, it executes the
+event handler from the js-code and displays
+the new note through DOM manipulation
