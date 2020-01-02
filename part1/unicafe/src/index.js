@@ -13,14 +13,15 @@ const Statistic = ({ text, number, type }) => (
   </p>
 );
 
-const Statistics = () => {
+const Statistics = ({good, bad, neutral, average, total, positive}) => 
+<>
     <Statistic text="good" number={good} />
     <Statistic text="neutral" number={neutral} />
     <Statistic text="bad" number={bad} />
     <Statistic text="all" number={total} />
     <Statistic text="average" number={average} />
     <Statistic text="positive" number={positive || 0} type="percentage" />
-}
+</>;
 
 const App = () => {
   // save clicks of each button to own state
@@ -46,7 +47,13 @@ const App = () => {
       <Button text="neutral" handleClick={voteNeutral} />
       <Button text="bad" handleClick={voteBad} />
       <Header text="statistics" />
-      <Statistics />
+      <Statistics 
+      good={good} 
+      bad={bad}
+      neutral={neutral} 
+      total={total}
+      average={average}
+      positive={positive} />
 </div>
   );
 };
