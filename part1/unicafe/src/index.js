@@ -7,8 +7,11 @@ const Button = ({ text, handleClick }) => (
   <button onClick={handleClick}> {text} </button>
 );
 
-const Statistic = ({text, number}) =>
-<p>{text}: {number} </p>
+const Statistic = ({ text, number }) => (
+  <p>
+    {text}: {number}
+  </p>
+);
 
 const App = () => {
   // save clicks of each button to own state
@@ -28,8 +31,8 @@ const App = () => {
       <Button text="bad" handleClick={voteBad} />
       <Header text="statistics" />
       <Statistic text="good" number={good} />
-        <Statistic text="neutral" number={neutral}/>
-        <Statistic text="bad" number={bad}/>
+      <Statistic text="neutral" number={neutral} />
+      <Statistic text="bad" number={bad} />
     </div>
   );
 };
