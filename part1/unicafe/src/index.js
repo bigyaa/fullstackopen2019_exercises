@@ -7,9 +7,9 @@ const Button = ({ text, handleClick }) => (
   <button onClick={handleClick}> {text} </button>
 );
 
-const Statistic = ({ text, number }) => (
+const Statistic = ({ text, number, type }) => (
   <p>
-    {text}: {number}
+    {text}: {number} {type==="percentage"? '%': ''}
   </p>
 );
 
@@ -18,6 +18,13 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [goodFlag, neutralFlag, badFlag] = [1, 0, -1];
+
+  const total = good+neutral+bad;
+
+  const average = (good*goodFlag+neutral*neutralFlag+bad*badFlag)/total || 0;
+
+  const positive = (good/total)*100; 
 
   const voteGood = () => setGood(good + 1);
   const voteNeutral = () => setNeutral(neutral + 1);
@@ -33,7 +40,10 @@ const App = () => {
       <Statistic text="good" number={good} />
       <Statistic text="neutral" number={neutral} />
       <Statistic text="bad" number={bad} />
-    </div>
+      <Statistic text="all" number={total} />
+      <Statistic text="average" number={average} />
+      <Statistic text="positive" number={positive || 0} type="percentage" />
+</div>
   );
 };
 
