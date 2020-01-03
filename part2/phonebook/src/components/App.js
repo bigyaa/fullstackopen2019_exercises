@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import PersonForm from "./PersonForm";
+import Persons from "./Persons";
+import Filter from "./Filter";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -7,6 +10,7 @@ const App = () => {
     { name: "Dan Abramov", number: "12-43-234345" },
     { name: "Mary Poppendieck", number: "39-23-6423122" }
   ]);
+
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [nameFilter, setNameFilter] = useState("");
@@ -17,10 +21,16 @@ const App = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+
     if (persons.find(person => person.name === newName)) {
       alert(`${newName} already exists in the phonebook`);
     } else {
-      setPersons(persons.concat({ name: newName, number: newNumber }));
+      setPersons(
+        persons.concat({
+          name: newName,
+          number: newNumber
+        })
+      );
       setNewName("");
       setNewNumber("");
     }
@@ -29,43 +39,22 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter Name:{" "}
-        <input value={nameFilter} onChange={handleNameFilterChange} />
-      </div>
+      <Filter
+        nameFilter={nameFilter}
+        handleNameFilterChange={handleNameFilterChange}
+      />
+
       <h2>Add a New Person</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          Name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <br />
-        <div>
-          Number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <br />
-        <div>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+      <PersonForm
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+        handleSubmit={handleSubmit}
+      />
+
       <h2>Numbers</h2>
-      <ul>
-        {nameFilter
-          ? persons.map(
-              person =>
-                person.name
-                  .toLowerCase()
-                  .includes(nameFilter.toLowerCase()) && (
-                  <li key={person.name}>
-                    {person.name} {person.number}
-                  </li>
-                )
-            )
-          : persons.map(person => (
-              <li key={person.name}>
-                {person.name} {person.number}
-              </li>
-            ))}
-      </ul>
+      <Persons persons={persons} nameFilter={nameFilter} />
     </div>
   );
 };
