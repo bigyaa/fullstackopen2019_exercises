@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas", number: "111-222-111" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "111-222-111" }
+  ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -10,13 +12,14 @@ const App = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    persons.find(person =>
-      person.name === newName
-        ? alert(`${newName} already exists in the phonebook`)
-        : (
-          setPersons(persons.concat({ name: newName, number: newNumber }))
-          )
-    );
+    if(persons.find(person =>
+      person.name === newName)){
+       alert(`${newName} already exists in the phonebook`)
+      } else {
+        setPersons(persons.concat({ name: newName, number: newNumber }))
+        setNewName("");
+        setNewNumber("");
+      }
   };
 
   return (
@@ -38,7 +41,9 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person => (
-          <li key={person.name}>{person.name} {person.number}</li>
+          <li key={person.name}>
+            {person.name} {person.number}
+          </li>
         ))}
       </ul>
     </div>
