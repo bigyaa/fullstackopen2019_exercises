@@ -22,7 +22,7 @@ const App = () => {
 			alert(`${newName} already exists in the phonebook`);
 		} else {
 			const newPerson = {
-				id: persons.length + 1,
+				id: persons[persons.length - 1].number || persons.length + 1,
 				name: newName,
 				number: newNumber
 			};

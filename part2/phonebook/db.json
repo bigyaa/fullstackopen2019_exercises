@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2
@@ -21,16 +16,6 @@
       "id": 4
     },
     {
-      "name": "bigya",
-      "number": "23232323",
-      "id": 5
-    },
-    {
-      "id": 6,
-      "name": "proper name",
-      "number": "101"
-    },
-    {
       "id": 7,
       "name": "jackie chan",
       "number": "11111"
@@ -39,6 +24,21 @@
       "id": 8,
       "name": "saoirse ronan",
       "number": "2323"
+    },
+    {
+      "id": 6,
+      "name": "proper name",
+      "number": "544"
+    },
+    {
+      "id": "544",
+      "name": "Bigya Bajracharya",
+      "number": "0999"
+    },
+    {
+      "id": "0999",
+      "name": "Batista Bomb",
+      "number": "6767676-999"
     }
   ]
 }
