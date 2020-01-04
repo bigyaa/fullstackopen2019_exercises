@@ -10,10 +10,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [nameFilter, setNameFilter] = useState("");
 
+  const baseUrl = "http://localhost:3009/persons";
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3009/persons")
-      .then(response => setPersons(response.data));
+    axios.get(baseUrl).then(response => setPersons(response.data));
   }, []);
 
   const handleNameChange = event => setNewName(event.target.value);
@@ -26,12 +26,14 @@ const App = () => {
     if (persons.find(person => person.name === newName)) {
       alert(`${newName} already exists in the phonebook`);
     } else {
-      setPersons(
-        persons.concat({
+      axios
+        .post(baseUrl, {
+          id: persons.length + 1,
           name: newName,
           number: newNumber
         })
-      );
+        .then(response => setPersons(persons.concat(response.data)));
+
       setNewName("");
       setNewNumber("");
     }

@@ -6,16 +6,18 @@ const Persons = props => {
   return (
     <ul>
       {nameFilter
-        ? persons.map(
+        ? persons.length > 0 &&
+          persons.map(
             person =>
               person.name.toLowerCase().includes(nameFilter.toLowerCase()) && (
-                <li key={person.name}>
+                <li key={person.id}>
                   {person.name} {person.number}
                 </li>
               )
           )
-        : persons.map(person => (
-            <li key={person.name}>
+        : persons.length > 0 &&
+          persons.map(person => (
+            <li key={person.id}>
               {person.name} {person.number}
             </li>
           ))}
