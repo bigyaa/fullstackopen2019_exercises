@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
 import Filter from "./Filter";
+import Notification from "./Notification";
+
 import personServices from "../services/personServices";
 
 const App = () => {
@@ -10,6 +12,7 @@ const App = () => {
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 	const [nameFilter, setNameFilter] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
 
 	const handleNameChange = event => setNewName(event.target.value);
 	const handleNumberChange = event => setNewNumber(event.target.value);
@@ -45,6 +48,8 @@ const App = () => {
 			setNewName("");
 			setNewNumber("");
 
+			setSuccessMessage("Done");
+      setTimeout(()=> setSuccessMessage(""), 2000);
 			return personServices
 				.addPerson(newPerson)
 				.then(response => setPersons(persons.concat(response)));
@@ -57,6 +62,8 @@ const App = () => {
 
 	return (
 		<div>
+			<Notification successMessage={successMessage} />
+
 			<h2>Phonebook</h2>
 			<Filter
 				nameFilter={nameFilter}
