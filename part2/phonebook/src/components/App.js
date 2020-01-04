@@ -18,21 +18,36 @@ const App = () => {
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		if (persons.find(person => person.name === newName)) {
-			alert(`${newName} already exists in the phonebook`);
+		const person = persons.find(person => person.name === newName);
+
+		if (person) {
+			const replace = window.confirm(
+				`${newName} already exists in the phonebook. Replace new number with the new one?`
+			);
+
+			const newPerson = {
+				...person,
+				number: newNumber
+			};
+
+			return replace
+				? personServices
+						.updatePerson(person.id, newPerson)
+						.then(() => window.location.reload())
+				: "";
 		} else {
 			const newPerson = {
-				id: persons[persons.length - 1].number || persons.length + 1,
+				id: persons[persons.length - 1].number,
 				name: newName,
 				number: newNumber
 			};
 
-			personServices
-				.addPerson(newPerson)
-				.then(response => setPersons(persons.concat(response)));
-
 			setNewName("");
 			setNewNumber("");
+
+			return personServices
+				.addPerson(newPerson)
+				.then(response => setPersons(persons.concat(response)));
 		}
 	};
 

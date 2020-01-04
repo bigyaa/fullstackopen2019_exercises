@@ -10,4 +10,9 @@ const addPerson = person =>
 const removePerson = id =>
 	axios.delete(baseUrl.concat(`/${id}`)).then(response => response.data);
 
-export default { getAll, addPerson, removePerson };
+const updatePerson = (id, updatedPerson) =>
+	axios
+		.put(baseUrl.concat(`/${id}`), updatedPerson)
+		.then(response => response.data);
+
+export default { getAll, addPerson, removePerson, updatePerson };
