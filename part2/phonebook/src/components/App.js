@@ -21,7 +21,8 @@ const App = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const person = persons.find(person => person.name === newName);
+    const person =
+      persons.length > 0 && persons.find(person => person.name === newName);
 
     if (person) {
       const replace = window.confirm(
@@ -40,7 +41,7 @@ const App = () => {
         : "";
     } else {
       const newPerson = {
-        id: persons[persons.length - 1].number,
+        id: persons.length > 0 ? persons[persons.length - 1].number : 11111,
         name: newName,
         number: newNumber
       };
@@ -51,6 +52,7 @@ const App = () => {
       setSuccessMessage("Done");
 
       setTimeout(() => setSuccessMessage(""), 2000);
+
       return personServices
         .addPerson(newPerson)
         .then(response => setPersons(persons.concat(response)));
