@@ -1,0 +1,9 @@
+put http://localhost:3002/api/blogs/5e1715cbf82663230e12217
+Content-Type: application/json
+
+{
+    "title": "Not Fddddddddirst Blog",
+    "author": "Bigya",
+    "url": "notfirstblog.com",
+    "likes":1222
+}
