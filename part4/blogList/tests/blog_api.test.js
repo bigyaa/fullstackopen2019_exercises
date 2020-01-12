@@ -17,8 +17,11 @@ const initialBlogs = [
 beforeEach(async () => {
   await Blog.deleteMany({});
 
-  let blogObject = new Blog(initialBlogs[0]);
-  await blogObject.save();
+  const blogObjects = initialBlogs
+    .map(blog => new Blog(blog))
+
+  const promiseArray = blogObjects.map(blog => blog.save())
+  await Promise.all(promiseArray)
 });
 
 test("blogs are returned as json", async () => {
