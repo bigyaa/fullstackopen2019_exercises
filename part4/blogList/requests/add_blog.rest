@@ -2,8 +2,9 @@ post http://localhost:3002/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Not First Blog",
+    "title": "with user",
     "author": "Bigya",
-    "url": "notfirstblog.com",
-    "likes":1222
+    "url": "uuuoo.com",
+    "likes":134,
+    "userId": ["5e1e0953aa5d5820719aa380"]
 }
