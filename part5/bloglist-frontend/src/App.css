@@ -1,0 +1,12 @@
+.login-form{
+    margin-top: 15%;
+    margin-left: 37%;
+    padding: 60px 80px 60px 100px;
+    max-width: 200px;
+    border: 2px solid black;
+}
+
+.login-button{
+    position: relative;
+    left: 30%;
+}
