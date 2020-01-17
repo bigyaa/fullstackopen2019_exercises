@@ -1,10 +1,16 @@
-import React from 'react';
+import React from "react";
 
-const LoginForm = (props) => (
-  <form onSubmit={props.handleSubmit} className={"login-form"}>
+const LoginForm = props => (
+  <div>
+    <form onSubmit={props.handleLogin} className={"login-form"}>
+      <h2><u>Login Here</u></h2>
       <div>
         User Name:{" "}
-        <input type="text" value={props.username} onChange={props.handleNameChange} />
+        <input
+          type="text"
+          value={props.username}
+          onChange={props.handleNameChange}
+        />
       </div>
       <br />
       <div>
@@ -22,6 +28,7 @@ const LoginForm = (props) => (
         </button>
       </div>
     </form>
-)
+  </div>
+);
 
 export default LoginForm;

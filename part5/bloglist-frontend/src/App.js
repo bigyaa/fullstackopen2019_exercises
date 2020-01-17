@@ -18,7 +18,7 @@ const App = () => {
   const handleNameChange = event => setUsername(event.target.value);
   const handlePasswordChange = event => setPassword(event.target.value);
 
-  const handleSubmit = async event => {
+  const handleLogin = async event => {
     event.preventDefault();
 
     try {
@@ -27,6 +27,8 @@ const App = () => {
         password
       });
 
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+      blogServices.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
@@ -39,15 +41,28 @@ const App = () => {
     }
   };
 
+  const handleLogout = () =>{ 
+    window.localStorage.removeItem('loggedUser');
+    window.location.reload();
+  }
+
   useEffect(() => {
     blogServices.getAll().then(response => setBlogs(response));
+
+    const loggedUserJSON = window.localStorage.getItem('loggedUser');
+
+    if(loggedUserJSON) {
+      const loggedUser = JSON.parse(loggedUserJSON);
+      setUser(loggedUser);
+      blogServices.setToken(loggedUser.token);
+    }
   }, []);
 
   const showLoginForm = () => (
     <LoginForm
       handleNameChange={handleNameChange}
       handlePasswordChange={handlePasswordChange}
-      handleSubmit={handleSubmit}
+      handleLogin={handleLogin}
       username={username}
       password={password}
     />
@@ -67,8 +82,16 @@ const App = () => {
     </div>
   );
 
+  const showLogoutButton = () =>
+  <button type='button' onClick={handleLogout}>Logout</button>
+
+  const showUserInfo = () =>
+  <h3>{`${user.username} logged in`}</h3>
+  
   return (
     <>
+    {user && showUserInfo()}
+    {user && showLogoutButton()}
       <Notification notificationMessage={notificationMessage}></Notification>
       {!user ? showLoginForm() : showBlogs()}
     </>
