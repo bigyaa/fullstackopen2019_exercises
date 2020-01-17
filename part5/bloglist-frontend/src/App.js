@@ -1,82 +1,77 @@
 import React, { useState, useEffect } from "react";
-import './App.css';
-// import PersonForm from "./PersonForm";
-// import Persons from "./Persons";
-// import Filter from "./Filter";
-// import Notification from "./Notification";
+
+import "./App.css";
+import Notification from "./components/Notification";
+import Blog from "./components/Blog";
 
 import blogServices from "./services/blogs";
+import loginServices from "./services/login";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
-  const [blogs, setBlogs] = useState(['wut']);
+  const [blogs, setBlogs] = useState([""]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [nameFilter, setNameFilter] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [user, setUser] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const handleNameChange = event => setUsername(event.target.value);
   const handlePasswordChange = event => setPassword(event.target.value);
-  const handleNameFilterChange = event => setNameFilter(event.target.value);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-console.log(blogs)
-    // const person =
-    //   persons.length > 0 && persons.find(person => person.name === newName);
 
-    // if (person) {
-    //   const replace = window.confirm(
-    //     `${newName} already exists in the phonebook. Replace new number with the new one?`
-    //   );
+    try {
+      const user = await loginServices.login({
+        username,
+        password
+      });
 
-    //   const newPerson = {
-    //     ...person,
-    //     number: newNumber
-    //   };
+      setUser(user);
+      setUsername("");
+      setPassword("");
 
-    //   return replace
-    //     ? personServices
-    //         .updatePerson(person.id, newPerson)
-    //         .then(() => window.location.reload())
-    //     : "";
-    // } else {
-    //   const newPerson = {
-    //     id: persons.length > 0 ? persons[persons.length - 1].number : 11111,
-    //     name: newName,
-    //     number: newNumber
-    //   };
-
-    //   setNewName("");
-    //   setNewNumber("");
-
-    //   setSuccessMessage("Done");
-
-    //   setTimeout(() => setSuccessMessage(""), 2000);
-
-    //   return personServices
-    //     .addPerson(newPerson)
-    //     .then(response => setPersons(persons.concat(response)));
-    // }
+      setNotificationMessage("Logged in successfully");
+      setTimeout(() => setNotificationMessage(""), 2000);
+    } catch (exception) {
+      setNotificationMessage("Wrong Credentials");
+      setTimeout(() => setNotificationMessage(""), 2000);
+    }
   };
 
   useEffect(() => {
     blogServices.getAll().then(response => setBlogs(response));
   }, []);
 
+  const showLoginForm = () => (
+    <LoginForm
+      handleNameChange={handleNameChange}
+      handlePasswordChange={handlePasswordChange}
+      handleSubmit={handleSubmit}
+      username={username}
+      password={password}
+    />
+  );
+
+  const showBlogs = () => (
+    <div>
+      <h2>Blogs</h2>
+      {blogs &&
+        blogs.map(blog =>
+          blog.title && blog.author ? (
+            <Blog title={blog.title} author={blog.author} key={blog.id} />
+          ) : (
+            ""
+          )
+        )}
+    </div>
+  );
+
   return (
-    <form onSubmit={handleSubmit} className={'login-form'}>
-      <div>
-        User Name: <input value={username} onChange={handleNameChange} />
-      </div>
-      <br />
-      <div>
-        Password: <input value={password} onChange={handlePasswordChange} />
-      </div>
-      <br />
-      <div>
-        <button type="submit" className={'login-button'}>Login</button>
-      </div>
-    </form>
+    <>
+      <Notification notificationMessage={notificationMessage}></Notification>
+      {!user ? showLoginForm() : showBlogs()}
+    </>
   );
 };
 
