@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Notification from "./components/Notification";
 import Blog from "./components/Blog";
-
+import AddBlog from "./components/AddBlog";
 import blogServices from "./services/blogs";
 import loginServices from "./services/login";
 import LoginForm from "./components/LoginForm";
@@ -27,7 +27,7 @@ const App = () => {
         password
       });
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+      window.localStorage.setItem("loggedUser", JSON.stringify(user));
       blogServices.setToken(user.token);
       setUser(user);
       setUsername("");
@@ -41,17 +41,17 @@ const App = () => {
     }
   };
 
-  const handleLogout = () =>{ 
-    window.localStorage.removeItem('loggedUser');
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedUser");
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     blogServices.getAll().then(response => setBlogs(response));
 
-    const loggedUserJSON = window.localStorage.getItem('loggedUser');
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
-    if(loggedUserJSON) {
+    if (loggedUserJSON) {
       const loggedUser = JSON.parse(loggedUserJSON);
       setUser(loggedUser);
       blogServices.setToken(loggedUser.token);
@@ -69,7 +69,7 @@ const App = () => {
   );
 
   const showBlogs = () => (
-    <div>
+    <div className='blog-list'>
       <h2>Blogs</h2>
       {blogs &&
         blogs.map(blog =>
@@ -82,17 +82,20 @@ const App = () => {
     </div>
   );
 
-  const showLogoutButton = () =>
-  <button type='button' onClick={handleLogout}>Logout</button>
+  const showLogoutButton = () => (
+    <button type="button" onClick={handleLogout}>
+      Logout
+    </button>
+  );
 
-  const showUserInfo = () =>
-  <h3>{`${user.username} logged in`}</h3>
-  
+  const showUserInfo = () => <h3>{`${user.username} logged in`}</h3>;
+
   return (
     <>
-    {user && showUserInfo()}
-    {user && showLogoutButton()}
+      {user && showUserInfo()}
+      {user && showLogoutButton()}
       <Notification notificationMessage={notificationMessage}></Notification>
+      {user ? <AddBlog setNotificationMessage={setNotificationMessage} /> : ""}
       {!user ? showLoginForm() : showBlogs()}
     </>
   );
