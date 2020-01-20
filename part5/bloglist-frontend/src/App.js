@@ -14,6 +14,7 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleNameChange = event => setUsername(event.target.value);
   const handlePasswordChange = event => setPassword(event.target.value);
@@ -39,6 +40,8 @@ const App = () => {
       setNotificationMessage("Wrong Credentials");
       setTimeout(() => setNotificationMessage(""), 2000);
     }
+
+    toggleVisibility();
   };
 
   const handleLogout = () => {
@@ -58,27 +61,56 @@ const App = () => {
     }
   }, []);
 
+  const hideWhenVisible = { display: isVisible ? "none" : "" };
+  const showWhenVisible = { display: isVisible ? "" : "none" };
+
+  console.log("loooioi", isVisible, hideWhenVisible, showWhenVisible);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
   const showLoginForm = () => (
-    <LoginForm
-      handleNameChange={handleNameChange}
-      handlePasswordChange={handlePasswordChange}
-      handleLogin={handleLogin}
-      username={username}
-      password={password}
-    />
+    <div>
+      <button style={hideWhenVisible} onClick={() => toggleVisibility()}>
+        Log In
+      </button>
+      <div style={showWhenVisible}>
+        <LoginForm
+          handleNameChange={handleNameChange}
+          handlePasswordChange={handlePasswordChange}
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+        />
+      </div>
+      <button style={showWhenVisible} onClick={() => toggleVisibility()}>
+        Cancel
+      </button>
+    </div>
   );
 
   const showBlogs = () => (
-    <div className='blog-list'>
-      <h2>Blogs</h2>
-      {blogs &&
-        blogs.map(blog =>
-          blog.title && blog.author ? (
-            <Blog title={blog.title} author={blog.author} key={blog.id} />
-          ) : (
-            ""
-          )
-        )}
+    <div>
+      <div>
+        <button style={hideWhenVisible} onClick={() => toggleVisibility()}>
+          Add New Blog
+        </button>
+        <div style={showWhenVisible}>
+          <AddBlog setNotificationMessage={setNotificationMessage} />
+        </div>
+        <button style={showWhenVisible} onClick={() => toggleVisibility()}>
+          Cancel
+        </button>
+      </div>
+      <div className="blog-list">
+        <h2>Blogs</h2>
+        {blogs &&
+          blogs.map(blog =>
+            blog.title && blog.author ? (
+              <Blog title={blog.title} author={blog.author} key={blog.id} />
+            ) : (
+              ""
+            )
+          )}
+      </div>
     </div>
   );
 
@@ -95,7 +127,6 @@ const App = () => {
       {user && showUserInfo()}
       {user && showLogoutButton()}
       <Notification notificationMessage={notificationMessage}></Notification>
-      {user ? <AddBlog setNotificationMessage={setNotificationMessage} /> : ""}
       {!user ? showLoginForm() : showBlogs()}
     </>
   );
