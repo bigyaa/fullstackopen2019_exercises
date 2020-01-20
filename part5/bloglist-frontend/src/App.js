@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import "./App.css";
-import Notification from "./components/Notification";
-import Blog from "./components/Blog";
-import AddBlog from "./components/AddBlog";
-import blogServices from "./services/blogs";
-import loginServices from "./services/login";
-import LoginForm from "./components/LoginForm";
+import './App.css';
+import Notification from './components/Notification';
+import Blog from './components/Blog';
+import AddBlog from './components/AddBlog';
+import blogServices from './services/blogs';
+import loginServices from './services/login';
+import LoginForm from './components/LoginForm';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([""]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
-  const [notificationMessage, setNotificationMessage] = useState("");
+  const [blogs, setBlogs] = useState(['']);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
   const handleNameChange = event => setUsername(event.target.value);
@@ -28,31 +28,31 @@ const App = () => {
         password
       });
 
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
       blogServices.setToken(user.token);
       setUser(user);
-      setUsername("");
-      setPassword("");
+      setUsername('');
+      setPassword('');
 
-      setNotificationMessage("Logged in successfully");
-      setTimeout(() => setNotificationMessage(""), 2000);
+      setNotificationMessage('Logged in successfully');
+      setTimeout(() => setNotificationMessage(''), 2000);
     } catch (exception) {
-      setNotificationMessage("Wrong Credentials");
-      setTimeout(() => setNotificationMessage(""), 2000);
+      setNotificationMessage('Wrong Credentials');
+      setTimeout(() => setNotificationMessage(''), 2000);
     }
 
     toggleVisibility();
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedUser");
+    window.localStorage.removeItem('loggedUser');
     window.location.reload();
   };
 
   useEffect(() => {
     blogServices.getAll().then(response => setBlogs(response));
 
-    const loggedUserJSON = window.localStorage.getItem("loggedUser");
+    const loggedUserJSON = window.localStorage.getItem('loggedUser');
 
     if (loggedUserJSON) {
       const loggedUser = JSON.parse(loggedUserJSON);
@@ -61,10 +61,9 @@ const App = () => {
     }
   }, []);
 
-  const hideWhenVisible = { display: isVisible ? "none" : "" };
-  const showWhenVisible = { display: isVisible ? "" : "none" };
+  const hideWhenVisible = { display: isVisible ? 'none' : '' };
+  const showWhenVisible = { display: isVisible ? '' : 'none' };
 
-  console.log("loooioi", isVisible, hideWhenVisible, showWhenVisible);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const showLoginForm = () => (
@@ -107,7 +106,7 @@ const App = () => {
             blog.title && blog.author ? (
               <Blog title={blog.title} author={blog.author} key={blog.id} />
             ) : (
-              ""
+              ''
             )
           )}
       </div>

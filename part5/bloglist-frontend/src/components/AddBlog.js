@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import blogServices from "../services/blogs";
+import blogServices from '../services/blogs';
 
 const AddBlog = props => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setURL] = useState("");
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setURL] = useState('');
   const [likes, setLikes] = useState(0);
 
   const resetFields = () => {
-    setTitle("");
-    setAuthor("");
-    setURL("");
+    setTitle('');
+    setAuthor('');
+    setURL('');
     setLikes(0);
   };
 
@@ -23,8 +24,8 @@ const AddBlog = props => {
 
       await blogServices.create(newBlog);
       await window.location.reload();
-      props.setNotificationMessage("New Blog added successfully!");
-      setTimeout(() => props.setNotificationMessage(""), 5000);
+      props.setNotificationMessage('New Blog added successfully!');
+      setTimeout(() => props.setNotificationMessage(''), 5000);
 
       resetFields();
     } catch (exception) {
@@ -33,9 +34,9 @@ const AddBlog = props => {
   };
 
   return (
-    <form onSubmit={addBlog} className={"add-form"}>
+    <form onSubmit={addBlog} className={'add-form'}>
       <div>
-        Title:{" "}
+        Title:{' '}
         <input
           type="text"
           value={title}
@@ -44,7 +45,7 @@ const AddBlog = props => {
       </div>
       <br />
       <div>
-        Author:{" "}
+        Author:{' '}
         <input
           type="text"
           value={author}
@@ -53,7 +54,7 @@ const AddBlog = props => {
       </div>
       <br />
       <div>
-        URL:{" "}
+        URL:{' '}
         <input
           type="url"
           value={url}
@@ -62,7 +63,7 @@ const AddBlog = props => {
       </div>
       <br />
       <div>
-        Likes:{" "}
+        Likes:{' '}
         <input
           type="number"
           value={likes}
@@ -75,6 +76,10 @@ const AddBlog = props => {
       </div>
     </form>
   );
+};
+
+AddBlog.propTypes = {
+  setNotificationMessage: PropTypes.func.isRequired
 };
 
 export default AddBlog;
