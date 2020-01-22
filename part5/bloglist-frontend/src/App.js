@@ -7,32 +7,29 @@ import AddBlog from './components/AddBlog';
 import blogServices from './services/blogs';
 import loginServices from './services/login';
 import LoginForm from './components/LoginForm';
+import { useField } from './hooks/index';
 
 const App = () => {
   const [blogs, setBlogs] = useState(['']);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleNameChange = event => setUsername(event.target.value);
-  const handlePasswordChange = event => setPassword(event.target.value);
+  const name = useField('text');
+  const password = useField('password');
 
   const handleLogin = async event => {
     event.preventDefault();
 
     try {
-      const user = await loginServices.login({
-        username,
-        password
-      });
+      const user = await loginServices.login(
+        { username: name.value,
+          password: password.value }
+      );
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user));
       blogServices.setToken(user.token);
       setUser(user);
-      setUsername('');
-      setPassword('');
 
       setNotificationMessage('Logged in successfully');
       setTimeout(() => setNotificationMessage(''), 2000);
@@ -73,10 +70,8 @@ const App = () => {
       </button>
       <div style={showWhenVisible}>
         <LoginForm
-          handleNameChange={handleNameChange}
-          handlePasswordChange={handlePasswordChange}
           handleLogin={handleLogin}
-          username={username}
+          name={name}
           password={password}
         />
       </div>

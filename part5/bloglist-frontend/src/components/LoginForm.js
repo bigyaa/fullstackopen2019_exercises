@@ -1,43 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LoginForm = props => (
-  <div>
-    <form onSubmit={props.handleLogin} className={'login-form'}>
-      <h2><u>Login Here</u></h2>
-      <div>
+const LoginForm = ({ name, password, handleLogin }) => {
+
+  return (
+    <div>
+      <form onSubmit={handleLogin} className={'login-form'}>
+        <h2><u>Login Here</u></h2>
+        <div>
         User Name:{' '}
-        <input
-          type="text"
-          value={props.username}
-          onChange={props.handleNameChange}
-        />
-      </div>
-      <br />
-      <div>
+          <input
+            type={name.type}
+            value={name.value}
+            onChange={name.onChange}
+          />
+        </div>
+        <br />
+        <div>
         Password:{' '}
-        <input
-          type="password"
-          value={props.password}
-          onChange={props.handlePasswordChange}
-        />
-      </div>
-      <br />
-      <div>
-        <button type="submit" className={'login-button'}>
+          <input
+            type={password.type}
+            value={password.value}
+            onChange={password.onChange}
+          />
+        </div>
+        <br />
+        <div>
+          <button type="submit" className={'login-button'}>
           Login
-        </button>
-      </div>
-    </form>
-  </div>
-);
+          </button>
+        </div>
+      </form>
+    </div>
+  );};
+
 
 LoginForm.propTypes = {
-  handleNameChange:PropTypes.func.isRequired,
-  handlePasswordChange:PropTypes.func.isRequired,
   handleLogin:PropTypes.func.isRequired,
-  username:PropTypes.string.isRequired,
-  password:PropTypes.string.isRequired,
+  name:PropTypes.object.isRequired,
+  password:PropTypes.object.isRequired,
 };
 
 export default LoginForm;
