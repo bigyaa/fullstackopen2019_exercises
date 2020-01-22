@@ -2,25 +2,26 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import blogServices from '../services/blogs';
+import { useField } from '../hooks/index';
 
 const AddBlog = props => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setURL] = useState('');
-  const [likes, setLikes] = useState(0);
+  const title= useField('text');
+  const author = useField('text');
+  const url =  useField('url');
+  const likes=  useField('number');
 
   const resetFields = () => {
-    setTitle('');
-    setAuthor('');
-    setURL('');
-    setLikes(0);
+    title.resetValue();
+    author.resetValue();
+    url.resetValue();
+    likes.resetValue();
   };
 
   const addBlog = async event => {
     event.preventDefault();
 
     try {
-      const newBlog = { title, author, url, likes };
+      const newBlog = { title:title.value, author: author.value, url: url.value, likes: likes.value };
 
       await blogServices.create(newBlog);
       await window.location.reload();
@@ -38,36 +39,36 @@ const AddBlog = props => {
       <div>
         Title:{' '}
         <input
-          type="text"
-          value={title}
-          onChange={({ target }) => setTitle(target.value)}
+          type={title.type}
+          value={title.value}
+          onChange={title.onChange}
         />
       </div>
       <br />
       <div>
         Author:{' '}
         <input
-          type="text"
-          value={author}
-          onChange={({ target }) => setAuthor(target.value)}
+          type={author.type}
+          value={author.value}
+          onChange={author.onChange}
         />
       </div>
       <br />
       <div>
         URL:{' '}
         <input
-          type="url"
-          value={url}
-          onChange={({ target }) => setURL(target.value)}
+          type={url.type}
+          value={url.value}
+          onChange={url.onChange}
         />
       </div>
       <br />
       <div>
         Likes:{' '}
         <input
-          type="number"
-          value={likes}
-          onChange={({ target }) => setLikes(target.value)}
+          type={likes.type}
+          value={likes.value}
+          onChange={likes.onChange}
         />
       </div>
       <br />
@@ -79,7 +80,7 @@ const AddBlog = props => {
 };
 
 AddBlog.propTypes = {
-  setNotificationMessage: PropTypes.func.isRequired
+  setNotificationMessage: PropTypes.func.isRequired,
 };
 
 export default AddBlog;

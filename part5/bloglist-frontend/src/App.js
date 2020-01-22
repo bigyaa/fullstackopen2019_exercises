@@ -99,7 +99,7 @@ const App = () => {
         {blogs &&
           blogs.map(blog =>
             blog.title && blog.author ? (
-              <Blog title={blog.title} author={blog.author} key={blog.id} />
+              <Blog blog={blog} key={blog.id} />
             ) : (
               ''
             )
