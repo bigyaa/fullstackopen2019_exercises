@@ -1,9 +1,7 @@
 import React from "react";
 import { createAnecdoteRequest } from "../reducers/anecdoteReducer";
 
-const AnecdoteForm = props => {
-  const store = props.store;
-
+const AnecdoteForm = ({ store }) => {
   const createAnecdote = event => {
     event.preventDefault();
 
@@ -15,7 +13,7 @@ const AnecdoteForm = props => {
 
   return (
     <div>
-      <h2>create new</h2>
+      <h2>Create New Anecdote</h2>
       <form onSubmit={createAnecdote}>
         <div>
           <input name="anecdote" />
