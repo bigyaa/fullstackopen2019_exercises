@@ -30,7 +30,6 @@ export const createAnecdoteRequest = anecdote => ({
 });
 
 const anecdoteReducer = (state = initialState, action) => {
-  console.log("ANECDOTE", action)
   switch (action.type) {
     case "VOTE":
       const id = action.data.id;
