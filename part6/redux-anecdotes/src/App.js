@@ -3,11 +3,11 @@ import AnecdoteForm from "./components/AnecdoteForm";
 import AnecdoteList from "./components/AnecdoteList";
 import Notification from "./components/Notification";
 
-const App = props => (
+const App = () => (
   <div>
-    <Notification store={props.store} />
-    <AnecdoteList store={props.store} />
-    <AnecdoteForm store={props.store} />
+    <Notification />
+    <AnecdoteList />
+    <AnecdoteForm />
   </div>
 );
 
