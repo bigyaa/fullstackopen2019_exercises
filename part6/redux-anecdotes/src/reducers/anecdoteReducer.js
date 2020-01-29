@@ -1,19 +1,18 @@
 import anecdoteService from '../services/anecdotes';
 
-const getId = () => (100000 * Math.random()).toFixed(0);
-
 const asObject = anecdote => ({
   content: anecdote,
-  id: getId(),
   votes: 0
 });
 
 const initialState = [];
 
-export const voteRequest = id => ({
+export const voteRequest = id => (async dispatch =>{
+  await anecdoteService.vote(id);
+  dispatch({
   type: "VOTE",
   data: { id }
-});
+})});
 
 export const createAnecdote = anecdote => (async dispatch => {
   const newAnecdote= await anecdoteService.createNew(anecdote);

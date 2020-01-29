@@ -23,7 +23,7 @@
     {
       "content": "Premature optimization is the root of all evil.",
       "id": "25170",
-      "votes": 0
+      "votes": 2
     },
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
@@ -32,7 +32,7 @@
     },
     {
       "content": "Hello world",
-      "votes": 0,
+      "votes": 1,
       "id": "x4kDZ0D"
     },
     {
@@ -54,6 +54,21 @@
       "content": "aaq",
       "votes": 0,
       "id": "qVH6yPQ"
+    },
+    {
+      "content": "rere",
+      "votes": 0,
+      "id": "2wp542o"
+    },
+    {
+      "content": "gr",
+      "votes": 0,
+      "id": "wpXgtXR"
+    },
+    {
+      "content": "ui",
+      "votes": 0,
+      "id": "5e5rg2b"
     }
   ]
 }
