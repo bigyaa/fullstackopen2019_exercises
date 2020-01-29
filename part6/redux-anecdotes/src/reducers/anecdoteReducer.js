@@ -1,12 +1,10 @@
 const getId = () => (100000 * Math.random()).toFixed(0);
 
-const asObject = anecdote => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  };
-};
+const asObject = anecdote => ({
+  content: anecdote,
+  id: getId(),
+  votes: 0
+});
 
 const initialState = [];
 
@@ -17,7 +15,7 @@ export const voteRequest = id => ({
 
 export const createAnecdoteRequest = anecdote => ({
   type: "CREATE",
-  data: { content: anecdote }
+  data: anecdote
 });
 
 export const initializeAnecdotesRequest = anecdotes => ({
