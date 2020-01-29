@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { createAnecdoteRequest } from "../reducers/anecdoteReducer";
+import { createAnecdote } from "../reducers/anecdoteReducer";
 import { setNotification } from "../reducers/notificationReducer";
 import anecdoteService from "../services/anecdotes";
 
@@ -12,10 +12,8 @@ const AnecdoteForm = props => {
     const content = event.target.anecdote.value;
     event.target.anecdote.value = "";
 
-    const newAnecdote = await anecdoteService.createNew(content);
-    console.log("new anecdote", newAnecdote);
-    props.createAnecdoteRequest(newAnecdote);
-    props.setNotification(`Successfully added new anecdote: "${newAnecdote}"`);
+    props.createAnecdote(content);
+    props.setNotification(`Successfully added new anecdote: "${content}"`);
   };
 
   return (
@@ -32,7 +30,7 @@ const AnecdoteForm = props => {
 };
 
 const mapDispatchToProps = {
-  createAnecdoteRequest,
+  createAnecdote,
   setNotification
 };
 

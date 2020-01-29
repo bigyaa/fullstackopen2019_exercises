@@ -15,9 +15,12 @@ export const voteRequest = id => ({
   data: { id }
 });
 
-export const createAnecdoteRequest = anecdote => ({
+export const createAnecdote = anecdote => (async dispatch => {
+  const newAnecdote= await anecdoteService.createNew(anecdote);
+  dispatch({
   type: "CREATE",
-  data: anecdote
+  data: newAnecdote
+});
 });
 
 export const initializeAnecdotes = () => (async dispatch => {
