@@ -4,14 +4,11 @@ import { connect } from "react-redux";
 import AnecdoteForm from "./components/AnecdoteForm";
 import AnecdoteList from "./components/AnecdoteList";
 import Notification from "./components/Notification";
-import anecdoteService from "./services/anecdotes";
-import { initializeAnecdotesRequest } from "./reducers/anecdoteReducer";
+import { initializeAnecdotes } from "./reducers/anecdoteReducer";
 
 const App = props => {
   useEffect(() => {
-    anecdoteService
-      .getAll()
-      .then(anecdotes => props.initializeAnecdotesRequest(anecdotes));
+    props.initializeAnecdotes();
   });
 
   return (
@@ -22,4 +19,4 @@ const App = props => {
     </div>
   );
 };
-export default connect(null, { initializeAnecdotesRequest })(App);
+export default connect(null, { initializeAnecdotes })(App);
