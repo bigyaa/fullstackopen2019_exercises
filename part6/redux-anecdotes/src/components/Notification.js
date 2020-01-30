@@ -1,46 +1,28 @@
-import React from "react";
+import React   from "react";
 import { connect } from "react-redux";
 
-import { emptyNotification } from "../reducers/notificationReducer";
-
 const Notification = props => {
-  let style = {
-    border: "solid",
-    padding: 10,
-    borderWidth: 1
-  };
+	let style = {
+		border: "solid",
+		padding: 10,
+		borderWidth: 1
+	};
 
-  const notification = props.notification;
+	const notification = props.notification;
 
-  let timer;
+	const showNotification = () => {
+		return <div style={style}>{notification}</div>;
+	};
 
-  const hideNotification = () => {
-    timer = setTimeout(() => {
-      props.emptyNotification();
-    }, 5000);
-  };
-
-  const showNotification = () => {
-    return <div style={style}>{notification}</div>;
-  };
-
-  return notification ? (
-    <div>
-      {clearTimeout(timer)}
-      {showNotification()}
-      {hideNotification()}
-    </div>
-  ) : null;
+	return notification ? <div>{showNotification()}</div> : null;
 };
 
 const mapStateToProps = state => {
-  return {
-    notification: state.notification
-  };
+	return {
+		notification: state.notification
+	};
 };
 
-const mapDispatchToProps = {
-  emptyNotification
-};
+const mapDispatchToProps = null;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

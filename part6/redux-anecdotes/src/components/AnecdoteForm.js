@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { createAnecdote } from "../reducers/anecdoteReducer";
-import { setNotification } from "../reducers/notificationReducer";
+import { setTimedNotification } from "../reducers/notificationReducer";
 
 const AnecdoteForm = props => {
   const createAnecdote = async event => {
@@ -12,7 +12,7 @@ const AnecdoteForm = props => {
     event.target.anecdote.value = "";
 
     props.createAnecdote(content);
-    props.setNotification(`Successfully added new anecdote: "${content}"`);
+    props.setTimedNotification(`Successfully added new anecdote: "${content}"`, 5);
   };
 
   return (
@@ -30,7 +30,7 @@ const AnecdoteForm = props => {
 
 const mapDispatchToProps = {
   createAnecdote,
-  setNotification
+  setTimedNotification
 };
 
 export default connect(null, mapDispatchToProps)(AnecdoteForm);
