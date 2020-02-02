@@ -1,11 +1,15 @@
 import React, { useState } from "../node_modules/react";
-import { BrowserRouter as Router, Route, Link } from "../node_modules/react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Link
+} from "../node_modules/react-router-dom";
 
 const Menu = props => {
 	const padding = {
 		paddingRight: 5
 	};
-	
+
 	return (
 		<Router>
 			<Link to="/" style={padding}>
@@ -33,13 +37,33 @@ const Menu = props => {
 };
 
 const AnecdoteList = ({ anecdotes }) => (
-	<div>
+	<Router>
 		<h2>Anecdotes</h2>
 		<ul>
 			{anecdotes.map(anecdote => (
-				<li key={anecdote.id}>{anecdote.content}</li>
+				<li key={anecdote.id}>
+					<Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+				</li>
 			))}
 		</ul>
+		<Route
+			path="/anecdotes/:id"
+			render={({ match }) => (
+				<View anecdote={anecdotes.find(item => item.id === match.params.id)} />
+			)}
+		/>
+	</Router>
+);
+
+const View = ({ anecdote }) => (
+	<div>
+		<h2>
+			{anecdote.content} by {anecdote.author}
+		</h2>
+		<p>{`has ${anecdote.votes} votes`}</p>
+		<p>
+			for more info see <a href={anecdote.info}>{anecdote.info}</a>
+		</p>
 	</div>
 );
 
@@ -170,9 +194,6 @@ const App = () => {
 		<div>
 			<h1>Software anecdotes</h1>
 			<Menu anecdotes={anecdotes} addNew={addNew} />
-			{/* <AnecdoteList anecdotes={anecdotes} />
-			<About />
-			<CreateNew addNew={addNew} /> */}
 			<Footer />
 		</div>
 	);
