@@ -2,7 +2,8 @@ import React, { useState } from "../node_modules/react";
 import {
 	BrowserRouter as Router,
 	Route,
-	Link
+	Link,
+	Redirect
 } from "../node_modules/react-router-dom";
 
 const Menu = props => {
@@ -22,6 +23,8 @@ const Menu = props => {
 				about
 			</Link>
 
+			<Notification notification={props.notification} />
+
 			<Route
 				exact
 				path="/"
@@ -29,7 +32,13 @@ const Menu = props => {
 			/>
 			<Route
 				path="/create"
-				render={() => <CreateNew addNew={props.addNew} />}
+				render={() =>
+					props.notification ? (
+						<AnecdoteList anecdotes={props.anecdotes} />
+					) : (
+						<CreateNew addNew={props.addNew} />
+					)
+				}
 			/>
 			<Route path="/about" render={() => <About />} />
 		</Router>
@@ -152,6 +161,8 @@ const CreateNew = props => {
 	);
 };
 
+const Notification = ({ notification }) => <p>{notification}</p>;
+
 const App = () => {
 	const [anecdotes, setAnecdotes] = useState([
 		{
@@ -175,6 +186,8 @@ const App = () => {
 	const addNew = anecdote => {
 		anecdote.id = (Math.random() * 10000).toFixed(0);
 		setAnecdotes(anecdotes.concat(anecdote));
+		setNotification(`a new anecdote ${anecdote.content} created!`);
+		setTimeout(() => setNotification(""), 10000);
 	};
 
 	const anecdoteById = id => anecdotes.find(a => a.id === id);
@@ -193,7 +206,7 @@ const App = () => {
 	return (
 		<div>
 			<h1>Software anecdotes</h1>
-			<Menu anecdotes={anecdotes} addNew={addNew} />
+			<Menu anecdotes={anecdotes} addNew={addNew} notification={notification} />
 			<Footer />
 		</div>
 	);
