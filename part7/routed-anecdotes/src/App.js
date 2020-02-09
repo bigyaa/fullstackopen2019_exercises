@@ -28,7 +28,7 @@ const Menu = props => {
 			<Route
 				exact
 				path="/"
-				render={() => <AnecdoteList anecdotes={props.anecdotes} />}
+				render={() => <AnecdoteList anecdotes={props.anecdotes} vote={props.vote}/>}
 			/>
 			<Route
 				path="/create"
@@ -45,13 +45,14 @@ const Menu = props => {
 	);
 };
 
-const AnecdoteList = ({ anecdotes }) => (
+const AnecdoteList = ({ anecdotes, vote }) => (
 	<Router>
 		<h2>Anecdotes</h2>
 		<ul>
 			{anecdotes.map(anecdote => (
 				<li key={anecdote.id}>
 					<Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+					<button onClick={()=>vote(anecdote.id)}>Vote</button>
 				</li>
 			))}
 		</ul>
@@ -201,12 +202,14 @@ const App = () => {
 		};
 
 		setAnecdotes(anecdotes.map(a => (a.id === id ? voted : a)));
+		setNotification(`Voted "${anecdote.content}"!`);
+		setTimeout(() => setNotification(""), 4000);
 	};
 
 	return (
 		<div>
 			<h1>Software anecdotes</h1>
-			<Menu anecdotes={anecdotes} addNew={addNew} notification={notification} />
+			<Menu anecdotes={anecdotes} addNew={addNew} notification={notification} vote={vote}/>
 			<Footer />
 		</div>
 	);
