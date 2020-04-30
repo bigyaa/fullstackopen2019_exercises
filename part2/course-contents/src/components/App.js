@@ -1,5 +1,6 @@
 import React from "react";
 import Course from "./Course";
+import "../css/style.css";
 
 const App = () => {
   const courses = [
