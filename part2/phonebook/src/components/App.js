@@ -8,84 +8,121 @@ import Notification from "./Notification";
 import personServices from "../services/personServices";
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
-  const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
-  const [nameFilter, setNameFilter] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+	const [persons, setPersons] = useState([]);
+	const [newName, setNewName] = useState("");
+	const [newNumber, setNewNumber] = useState("");
+	const [nameFilter, setNameFilter] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
-  const handleNameChange = event => setNewName(event.target.value);
-  const handleNumberChange = event => setNewNumber(event.target.value);
-  const handleNameFilterChange = event => setNameFilter(event.target.value);
+	const handleNameChange = (event) => setNewName(event.target.value || event);
+	const handleNumberChange = (event) =>
+		setNewNumber(event.target.value || event);
+	const handleNameFilterChange = (event) => setNameFilter(event.target.value);
 
-  const handleSubmit = event => {
-    event.preventDefault();
+	const handleSubmit = (event) => {
+		event.preventDefault();
 
-    const person =
-      persons.length > 0 && persons.find(person => person.name === newName);
+		const person =
+			persons.length > 0 && persons.find((person) => person.name === newName);
 
-    if (person) {
-      const replace = window.confirm(
-        `${newName} already exists in the phonebook. Replace new number with the new one?`
-      );
+		if (person) {
+			const replace = window.confirm(
+				`${newName} already exists in the phonebook. Replace new number with the new one?`
+			);
 
-      const newPerson = {
-        ...person,
-        number: newNumber
-      };
+			const newPerson = {
+				...person,
+				number: newNumber,
+			};
 
-      return replace
-        ? personServices
-            .updatePerson(person.id, newPerson)
-            .then(() => window.location.reload())
-        : "";
-    } else {
-      const newPerson = {
-        id: persons.length > 0 ? persons[persons.length - 1].number : 11111,
-        name: newName,
-        number: newNumber
-      };
+			return replace
+				? personServices
+						.updatePerson(person.id, newPerson)
+						.then(() => window.location.reload())
+				: "";
+		} else {
+			const newPerson = {
+				id: persons.length > 0 ? persons[persons.length - 1].number : 11111,
+				name: newName,
+				number: newNumber,
+			};
 
-      setNewName("");
-      setNewNumber("");
+			setNewName("");
+			setNewNumber("");
 
-      setSuccessMessage("Done");
+			setSuccessMessage("Done");
 
-      setTimeout(() => setSuccessMessage(""), 2000);
+			setTimeout(() => setSuccessMessage(""), 2000);
 
-      return personServices
-        .addPerson(newPerson)
-        .then(response => setPersons(persons.concat(response)));
-    }
-  };
+			return personServices
+				.addPerson(newPerson)
+				.then((response) => setPersons(persons.concat(response)));
+		}
+	};
 
-  useEffect(() => {
-    personServices.getAll().then(response => setPersons(response));
-  }, []);
+	const handleEdit = (event) => {
+		event.preventDefault();
 
-  return (
-    <div>
-      <Notification successMessage={successMessage} />
+		const person =
+			persons.length > 0 && persons.find((person) => person.name === newName);
 
-      <h2>Phonebook</h2>
-      <Filter
-        nameFilter={nameFilter}
-        handleNameFilterChange={handleNameFilterChange}
-      />
+		if (person) {
+			window.confirm(
+				`${newName} already exists in the phonebook. Enter a different name`
+			);
+		} else {
+			const newPerson = {
+				...person,
+				name: newName,
+				number: newNumber,
+			};
 
-      <h2>Add a New Person</h2>
-      <PersonForm
-        newName={newName}
-        newNumber={newNumber}
-        handleNameChange={handleNameChange}
-        handleNumberChange={handleNumberChange}
-        handleSubmit={handleSubmit}
-      />
+			return personServices
+				.updatePerson(person.id, newPerson)
+				.then((response) => setPersons(persons.concat(response)));
+		}
+	};
 
-      <h2>Numbers</h2>
-      <Persons persons={persons} nameFilter={nameFilter} />
-    </div>
-  );
+	useEffect(() => {
+		personServices.getAll().then((response) => setPersons(response));
+	}, []);
+
+	return (
+		<div>
+			<Notification
+				successMessage={successMessage}
+				errorMessage={errorMessage}
+			/>
+
+			<h2>Phonebook</h2>
+			<Filter
+				nameFilter={nameFilter}
+				handleNameFilterChange={handleNameFilterChange}
+			/>
+
+			<h2>Add a New Person</h2>
+			<PersonForm
+				newName={newName}
+				newNumber={newNumber}
+				handleNameChange={handleNameChange}
+				handleNumberChange={handleNumberChange}
+				handleSubmit={handleSubmit}
+				handleEdit={handleEdit}
+			/>
+
+			<h2>Numbers</h2>
+			<Persons
+				newName={newName}
+				newNumber={newNumber}
+				handleNameChange={handleNameChange}
+				handleNumberChange={handleNumberChange}
+				persons={persons}
+				nameFilter={nameFilter}
+				setErrorMessage={setErrorMessage}
+			/>
+		</div>
+	);
 };
 
 export default App;
