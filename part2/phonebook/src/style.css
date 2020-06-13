@@ -1,13 +1,13 @@
 .success {
-	color: green;
+	color: white;
 	font-size: 20px;
-	background-color: beige;
-	text-align: center;
+	background-color: green;
+    text-align: center;
 }
 
 .error {
-	color: red;
+	color: white;
 	font-size: 20px;
-	background-color: beige;
-	text-align: center;
+	background-color: red;
+    text-align: center;
 }

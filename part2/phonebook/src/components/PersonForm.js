@@ -12,7 +12,7 @@ const PersonForm = (props) => {
 	} = props;
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form>
 			<div>
 				Name: <input value={newName} onChange={handleNameChange} />
 			</div>
@@ -25,7 +25,7 @@ const PersonForm = (props) => {
 				{isEdit ? (
 					<button onClick={handleEdit}>Edit</button>
 				) : (
-					<button type="submit">Add</button>
+					<button onClick={handleSubmit}>Add</button>
 				)}
 			</div>
 		</form>

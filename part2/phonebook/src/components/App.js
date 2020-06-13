@@ -14,10 +14,12 @@ const App = () => {
 	const [nameFilter, setNameFilter] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+	const [isEdit, setIsEdit] = useState(false);
+	const [selectedId, setSelectedId] = useState();
 
-	const handleNameChange = (event) => setNewName(event.target.value || event);
+	const handleNameChange = (event) => setNewName(event?.target?.value || event);
 	const handleNumberChange = (event) =>
-		setNewNumber(event.target.value || event);
+		setNewNumber(event?.target?.value || event);
 	const handleNameFilterChange = (event) => setNameFilter(event.target.value);
 
 	const handleSubmit = (event) => {
@@ -65,23 +67,17 @@ const App = () => {
 		event.preventDefault();
 
 		const person =
-			persons.length > 0 && persons.find((person) => person.name === newName);
+			persons.length > 0 && persons.find((person) => person.id === selectedId);
 
-		if (person) {
-			window.confirm(
-				`${newName} already exists in the phonebook. Enter a different name`
-			);
-		} else {
-			const newPerson = {
-				...person,
-				name: newName,
-				number: newNumber,
-			};
+		const newPerson = {
+			...person,
+			name: newName,
+			number: newNumber,
+		};
 
-			return personServices
-				.updatePerson(person.id, newPerson)
-				.then((response) => setPersons(persons.concat(response)));
-		}
+		return personServices
+			.updatePerson(selectedId, newPerson)
+			.then(() => window.location.reload());
 	};
 
 	useEffect(() => {
@@ -109,17 +105,18 @@ const App = () => {
 				handleNumberChange={handleNumberChange}
 				handleSubmit={handleSubmit}
 				handleEdit={handleEdit}
+				isEdit={isEdit}
 			/>
 
 			<h2>Numbers</h2>
 			<Persons
-				newName={newName}
-				newNumber={newNumber}
-				handleNameChange={handleNameChange}
-				handleNumberChange={handleNumberChange}
+				setNewName={setNewName}
+				setNewNumber={setNewNumber}
 				persons={persons}
+				setIsEdit={setIsEdit}
 				nameFilter={nameFilter}
 				setErrorMessage={setErrorMessage}
+				setSelectedId={setSelectedId}
 			/>
 		</div>
 	);
