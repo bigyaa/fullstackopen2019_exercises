@@ -23,7 +23,7 @@ const PersonForm = (props) => {
 			<br />
 			<div>
 				{isEdit ? (
-					<button onClick={handleEdit}>Edit</button>
+					<button onClick={handleEdit}>Save Changes</button>
 				) : (
 					<button onClick={handleSubmit}>Add</button>
 				)}

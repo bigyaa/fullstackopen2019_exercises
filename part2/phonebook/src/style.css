@@ -1,13 +1,148 @@
+html {
+	width: 100vw;
+	height: 100vh;
+}
+
+body,
+h1,
+h2 {
+	margin: 0;
+	color: #000000;
+}
+
+.main-container {
+	text-align: center;
+	font-family: monospace;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: whitesmoke;
+}
+
+.main {
+	width: 100%;
+	height: 100%;
+	text-align: -webkit-center;
+}
+
+.loader {
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+}
+.loader div {
+	display: inline-block;
+	position: absolute;
+	left: 8px;
+	width: 16px;
+	background: pink;
+	animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+	line-height: auto;
+}
+.loader div:nth-child(1) {
+	left: 8px;
+	animation-delay: -0.24s;
+}
+.loader div:nth-child(2) {
+	left: 32px;
+	animation-delay: -0.12s;
+}
+.loader div:nth-child(3) {
+	left: 56px;
+	animation-delay: 0;
+}
+@keyframes loader {
+	0% {
+		top: 8px;
+		height: 64px;
+	}
+	50%,
+	100% {
+		top: 24px;
+		height: 32px;
+	}
+}
+.loader:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+aside {
+	position: fixed;
+	width: 25%;
+	height: 100vh;
+	background-color: black;
+	color: white;
+}
+
+.right-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+}
+
+aside h2 {
+	color: whitesmoke;
+}
+
+.main-right {
+	position: relative;
+	width: 75%;
+	height: 100vh;
+	float: right;
+}
+
+.table-container,
+.main .form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+table {
+	width: 100%;
+}
+
+section {
+	padding: 25px 15px;
+	background-color: rgba(255, 255, 255, 1);
+	margin: 5px 0;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.filter {
+	margin: 0;
+	height: 15%;
+	/* width: 75%; */
+	box-sizing: content-box;
+	position: fixed;
+}
+
+.table-container {
+	height: 85%;
+}
+
+h2 {
+	padding-bottom: 15px;
+	color: #65507d;
+}
 .success {
 	color: white;
 	font-size: 20px;
 	background-color: green;
-    text-align: center;
+	text-align: center;
 }
 
 .error {
 	color: white;
 	font-size: 20px;
 	background-color: red;
-    text-align: center;
+	text-align: center;
 }

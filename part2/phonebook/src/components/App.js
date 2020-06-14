@@ -4,6 +4,9 @@ import PersonForm from "./PersonForm";
 import Persons from "./Persons";
 import Filter from "./Filter";
 import Notification from "./Notification";
+import Loader from "./Loader";
+import "../style.css";
+import "../helper.css";
 
 import personServices from "../services/personServices";
 
@@ -16,6 +19,7 @@ const App = () => {
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isEdit, setIsEdit] = useState(false);
 	const [selectedId, setSelectedId] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const handleNameChange = (event) => setNewName(event?.target?.value || event);
 	const handleNumberChange = (event) =>
@@ -81,43 +85,64 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		personServices.getAll().then((response) => setPersons(response));
+		personServices
+			.getAll()
+			.then((response) => setPersons(response))
+			.then(() => setLoading(false));
 	}, []);
 
 	return (
-		<div>
-			<Notification
-				successMessage={successMessage}
-				errorMessage={errorMessage}
-			/>
+		<div className="main-container">
+			<div className="main">
+				<aside className="form">
+					<h2>Add a New Person</h2>
+					<PersonForm
+						newName={newName}
+						newNumber={newNumber}
+						handleNameChange={handleNameChange}
+						handleNumberChange={handleNumberChange}
+						handleSubmit={handleSubmit}
+						handleEdit={handleEdit}
+						isEdit={isEdit}
+					/>
+				</aside>
 
-			<h2>Phonebook</h2>
-			<Filter
-				nameFilter={nameFilter}
-				handleNameFilterChange={handleNameFilterChange}
-			/>
+				<div className="main-right clearfix">
+					<div className="right-container">
+						<section className="filter">
+							<h2>Phonebook</h2>
+							<Filter
+								nameFilter={nameFilter}
+								handleNameFilterChange={handleNameFilterChange}
+							/>
+						</section>
 
-			<h2>Add a New Person</h2>
-			<PersonForm
-				newName={newName}
-				newNumber={newNumber}
-				handleNameChange={handleNameChange}
-				handleNumberChange={handleNumberChange}
-				handleSubmit={handleSubmit}
-				handleEdit={handleEdit}
-				isEdit={isEdit}
-			/>
+						<div className='table-container'>
+							<Notification
+								successMessage={successMessage}
+								errorMessage={errorMessage}
+							/>
 
-			<h2>Numbers</h2>
-			<Persons
-				setNewName={setNewName}
-				setNewNumber={setNewNumber}
-				persons={persons}
-				setIsEdit={setIsEdit}
-				nameFilter={nameFilter}
-				setErrorMessage={setErrorMessage}
-				setSelectedId={setSelectedId}
-			/>
+							<section className="data-table">
+								<h2>Numbers</h2>
+								{loading ? (
+									<Loader />
+								) : (
+									<Persons
+										setNewName={setNewName}
+										setNewNumber={setNewNumber}
+										persons={persons}
+										setIsEdit={setIsEdit}
+										nameFilter={nameFilter}
+										setErrorMessage={setErrorMessage}
+										setSelectedId={setSelectedId}
+									/>
+								)}
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
