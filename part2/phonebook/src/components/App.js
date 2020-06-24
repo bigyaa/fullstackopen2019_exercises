@@ -109,15 +109,17 @@ const App = () => {
 
 				<div className="main-right clearfix">
 					<div className="right-container">
-						<section className="filter">
-							<h2>Phonebook</h2>
-							<Filter
-								nameFilter={nameFilter}
-								handleNameFilterChange={handleNameFilterChange}
-							/>
-						</section>
+						<div className="header">
+							<h1>Phonebook</h1>
+							<section className="filter">
+								<Filter
+									nameFilter={nameFilter}
+									handleNameFilterChange={handleNameFilterChange}
+								/>
+							</section>
+						</div>
 
-						<div className='table-container'>
+						<div className="table-container">
 							<Notification
 								successMessage={successMessage}
 								errorMessage={errorMessage}
