@@ -26,10 +26,10 @@ const Person = (props) => {
 			<td>{person.name}</td>
 			<td> {person.number}</td>
 			<td>
-				<button onClick={() => handleDelete(person)}>Delete</button>
+				<button className='theme-button' onClick={() => handleDelete(person)}>Delete</button>
 			</td>
 			<td>
-				<button onClick={() => handleUpdate(person)}>Edit</button>
+				<button className='theme-button' onClick={() => handleUpdate(person)}>Edit</button>
 			</td>
 		</tr>
 	);

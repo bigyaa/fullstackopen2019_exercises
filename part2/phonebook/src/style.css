@@ -146,3 +146,11 @@ h2 {
 	background-color: red;
 	text-align: center;
 }
+
+.theme-button {
+	padding: 5px;
+	background-color: black;
+	border: 1px;
+	color: white;
+	border-radius: 17%;
+}
